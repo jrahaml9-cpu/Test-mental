@@ -3,89 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Wellness Check | MindCheck</title>
+    <title>Academic Wellness | UOHB</title>
     <style>
-        :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; --white: #ffffff; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); padding: 20px; text-align: center; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; background: var(--white); padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        h1 { color: var(--primary); margin-bottom: 10px; }
-        .question { margin-top: 25px; text-align: left; font-weight: bold; color: var(--primary); }
-        .options { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
-        .btn-check { display: none; }
-        .btn-label { background: #f0f2f5; padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.3s; text-align: left; border: 1px solid #ddd; }
-        .btn-check:checked + .btn-label { background: var(--accent); color: white; border-color: var(--accent); }
-        #result-section { display: none; margin-top: 30px; padding: 25px; border-radius: 12px; animation: fadeIn 0.6s; }
-        .advice-card { background: rgba(255,255,255,0.9); border-left: 5px solid; padding: 15px; margin-top: 15px; text-align: left; line-height: 1.6; }
-        button#submit-btn { background: var(--primary); color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; cursor: pointer; font-size: 18px; margin-top: 30px; transition: 0.3s; }
-        button#submit-btn:hover { background: #1a252f; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 0; line-height: 1.6; }
+        .header-bar { background-color: #ffffff; padding: 15px 30px; text-align: center; border-bottom: 3px solid #00563b; display: flex; align-items: center; justify-content: space-between; }
+        .uohb-logo { max-height: 70px; width: auto; }
+        .container { max-width: 750px; margin: 30px auto; background: #ffffff; padding: 40px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        h1 { color: #00563b; font-size: 1.8rem; text-align: center; }
+        .intro-text { font-size: 1.1rem; color: #555; text-align: left; margin-bottom: 30px; border-left: 4px solid #00563b; padding-left: 15px; }
+        .assessment-section { display: none; }
+        .question { font-weight: bold; margin-bottom: 15px; display: block; text-align: left; color: #2c3e50; font-size: 1.1rem; }
+        .option-item { display: block; background: #f8f9fa; margin-bottom: 12px; padding: 15px; border-radius: 8px; cursor: pointer; text-align: left; border: 1px solid #eee; transition: 0.3s; }
+        .option-item:hover { background: #eef2f1; border-color: #00563b; }
+        input[type="radio"] { margin-right: 10px; }
+        .main-btn { background-color: #00563b; color: white; border: none; padding: 18px; border-radius: 8px; font-size: 1.1rem; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px; }
+        #result-card { display: none; text-align: left; animation: fadeIn 0.8s; }
+        .advice-box { background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 10px; margin-top: 15px; }
+        .advice-item { margin-bottom: 15px; padding-left: 25px; position: relative; }
+        .advice-item::before { content: '→'; position: absolute; left: 0; color: #00563b; font-weight: bold; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
+<div class="header-bar">
+    <img src="https://i.ibb.co/L5m9N9Z/UOHB-Logo.png" alt="UOHB Logo" class="uohb-logo">
+    <h2 style="color: #00563b; margin: 0;">MindCheck</h2>
+    <div style="width: 70px;"></div>
+</div>
+
 <div class="container">
-    <h1>🌱 Student MindCheck</h1>
-    <p>A safe space to assess your academic burnout and get professional guidance.</p>
-
-    <div id="quiz">
-        <div class="question">1. How would you describe your sleep quality recently?</div>
-        <div class="options">
-            <input type="radio" name="q1" value="0" id="q1a" class="btn-check"><label for="q1a" class="btn-label">I sleep well and feel refreshed.</label>
-            <input type="radio" name="q1" value="1" id="q1b" class="btn-check"><label for="q1b" class="btn-label">Interrupted sleep; I keep thinking about studies.</label>
-            <input type="radio" name="q1" value="2" id="q1c" class="btn-check"><label for="q1c" class="btn-label">Severe insomnia and constant exhaustion.</label>
-        </div>
-
-        <div class="question">2. Do you still feel motivated to complete your academic tasks?</div>
-        <div class="options">
-            <input type="radio" name="q2" value="0" id="q2a" class="btn-check"><label for="q2a" class="btn-label">Yes, I still have my passion.</label>
-            <input type="radio" name="q2" value="1" id="q2b" class="btn-check"><label for="q2b" class="btn-label">Sometimes I feel heavy and bored.</label>
-            <input type="radio" name="q2" value="2" id="q2c" class="btn-check"><label for="q2c" class="btn-label">I feel completely drained and helpless.</label>
-        </div>
-
-        <button id="submit-btn" onclick="calculateResult()">Get My Results & Advice</button>
+    <div id="welcome-page">
+        <h1>Student Mental Health Assessment</h1>
+        <p class="intro-text">
+            Success in the medical and academic fields starts with a healthy mind. This assessment helps you identify your current stress level and provides deep, actionable strategies to prevent burnout.
+        </p>
+        <button class="main-btn" onclick="showQuiz()">Start Assessment</button>
     </div>
 
-    <div id="result-section">
-        <h2 id="status-title"></h2>
-        <div id="advice-content" class="advice-card"></div>
-        <button onclick="location.reload()" style="background:none; color:gray; border:none; cursor:pointer; margin-top:20px; text-decoration:underline;">Retake Test ↻</button>
+    <div id="quiz-page" class="assessment-section">
+        <div class="question">1. How often do you feel emotionally exhausted after a day of studying?</div>
+        <div class="options">
+            <label class="option-item"><input type="radio" name="q1" value="0"> Rarely</label>
+            <label class="option-item"><input type="radio" name="q1" value="1"> Sometimes</label>
+            <label class="option-item"><input type="radio" name="q1" value="2"> Almost daily</label>
+        </div>
+
+        <div class="question">2. Do you feel that your academic performance is being affected by your mood?</div>
+        <div class="options">
+            <label class="option-item"><input type="radio" name="q2" value="0"> Not at all</label>
+            <label class="option-item"><input type="radio" name="q2" value="1"> Occasionally</label>
+            <label class="option-item"><input type="radio" name="q2" value="2"> Strongly</label>
+        </div>
+        <button class="main-btn" onclick="showResult()">View Deep Solutions</button>
+    </div>
+
+    <div id="result-card">
+        <h2 id="res-title" style="text-align: center;"></h2>
+        <div class="advice-box" id="res-advice"></div>
+        <button onclick="location.reload()" style="background:none; border:none; color:#00563b; cursor:pointer; text-decoration:underline; width:100%; margin-top:20px;">Retake Test</button>
     </div>
 </div>
 
 <script>
-    function calculateResult() {
-        let score = 0;
+    function showQuiz() {
+        document.getElementById('welcome-page').style.display = 'none';
+        document.getElementById('quiz-page').style.display = 'block';
+    }
+
+    function showResult() {
         const q1 = document.querySelector('input[name="q1"]:checked');
         const q2 = document.querySelector('input[name="q2"]:checked');
+        if(!q1 || !q2) { alert("Please answer all questions"); return; }
 
-        if(!q1 || !q2) { alert("Please answer all questions first!"); return; }
-
-        score = parseInt(q1.value) + parseInt(q2.value);
-        
-        document.getElementById('quiz').style.display = 'none';
-        const resSection = document.getElementById('result-section');
-        const title = document.getElementById('status-title');
-        const advice = document.getElementById('advice-content');
-        resSection.style.display = 'block';
+        let score = parseInt(q1.value) + parseInt(q2.value);
+        document.getElementById('quiz-page').style.display = 'none';
+        const resCard = document.getElementById('result-card');
+        const adviceBox = document.getElementById('res-advice');
+        resCard.style.display = 'block';
 
         if(score <= 1) {
-            resSection.style.backgroundColor = "#d4edda";
-            title.innerText = "😊 Stable Status";
-            title.style.color = "#155724";
-            advice.innerHTML = "<b>Guidance:</b> You are doing great! Keep maintaining your work-life balance. Remember, prevention is better than cure—keep up with your hobbies.";
-            advice.style.borderColor = "#28a745";
+            document.getElementById('res-title').innerText = "😊 Green Zone: Optimal Balance";
+            adviceBox.innerHTML = `
+                <div class="advice-item"><b>Micro-breaks:</b> Use the 50/10 rule (50 min study, 10 min total rest) to keep your brain chemicals balanced.</div>
+                <div class="advice-item"><b>Social Buffer:</b> Maintain at least one non-academic hobby per week to prevent "Identity Shrinkage".</div>
+            `;
         } else if(score <= 3) {
-            resSection.style.backgroundColor = "#fff3cd";
-            title.innerText = "😐 Moderate Fatigue";
-            title.style.color = "#856404";
-            advice.innerHTML = "<b>Guidance:</b> Your mind is sending warning signals. You are experiencing accumulated stress. Try 'Digital Detox' for 2 hours daily and prioritize your tasks to reduce mental clutter.";
-            advice.style.borderColor = "#ffc107";
+            document.getElementById('res-title').innerText = "😐 Orange Zone: Early Burnout Signs";
+            adviceBox.innerHTML = `
+                <div class="advice-item"><b>The Brain Dump:</b> Write down everything stressing you before bed. Moving thoughts to paper signals the brain it can stop "looping" them.</div>
+                <div class="advice-item"><b>Digital Boundaries:</b> Stop all academic notifications 2 hours before sleep to lower your evening Cortisol levels.</div>
+                <div class="advice-item"><b>Prioritize Tasks:</b> Use the Eisenhower Matrix to separate urgent tasks from those that can wait.</div>
+            `;
         } else {
-            resSection.style.backgroundColor = "#f8d7da";
-            title.innerText = "😫 High Burnout Risk";
-            title.style.color = "#721c24";
-            advice.innerHTML = "<b>Deep Advice:</b> Stop and breathe. This level requires a serious restructure of your routine. It's okay to seek support from a counselor or a trusted friend. Your mental health is the engine of your academic success—without it, the car won't move.";
-            advice.style.borderColor = "#dc3545";
+            document.getElementById('res-title').innerText = "😫 Red Zone: Critical Exhaustion";
+            adviceBox.innerHTML = `
+                <div class="advice-item"><b>Immediate Deceleration:</b> Reduce your workload to the absolute minimum for 48 hours. Your cognitive function needs a "hard reset".</div>
+                <div class="advice-item"><b>Sensory Grounding:</b> When panic starts, use the 5-4-3-2-1 technique (Name 5 things you see, 4 you feel, 3 you hear, etc.) to stop the stress response.</div>
+                <div class="advice-item"><b>Professional Consult:</b> High burnout mimics clinical depression. Consider speaking with the University Counselor for a structured recovery plan.</div>
+                <div class="advice-item"><b>Sleep Hygiene:</b> Focus only on sleep for now. Without 7+ hours, your brain cannot process academic information correctly.</div>
+            `;
         }
     }
 </script>
