@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student MindCheck | Mental Health Assessment</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <style>
+        :root {
+            --primary: #4a90e2;
+            --primary-dark: #357abd;
+            --bg: #f0f2f5;
+            --card: #ffffff;
+            --text: #2d3436;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--card);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        header { text-align: center; margin-bottom: 40px; }
+        h1 { color: var(--primary); margin-bottom: 10px; }
+        
+        .question-card {
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--primary);
+        }
+
+        .options { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+        
+        .opt-btn {
+            padding: 10px 20px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 600;
+        }
+
+        .opt-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        #result-section {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            margin-top: 30px;
+            border-radius: 15px;
+            background: #f9f9f9;
+            border: 2px dashed #ddd;
+        }
+
+        .chat-area {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+        }
+
+        .chat-input-group { display: flex; gap: 10px; margin-top: 15px; }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .btn-submit {
+            background: var(--primary);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-submit:hover { background: var(--primary-dark); }
+
+        .btn-pdf {
+            background: #636e72;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        #ai-response {
+            margin-top: 15px;
+            font-style: italic;
+            color: var(--primary-dark);
+            min-height: 24px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🌱 MindCheck</h1>
+        <p>Simple Student Mental Health Assessment</p>
+    </header>
+
+    <div id="quiz-wrapper">
+        </div>
+
+    <button class="btn-submit" onclick="showResults()">Check My Result</button>
+
+    <div id="result-section">
+        <h2 id="score-tag">Your Result</h2>
+        <p id="advice-text"></p>
+        <button class="btn-submit btn-pdf" onclick="generatePDF()">Download Report (PDF)</button>
+    </div>
+
+    <div class="chat-area">
+        <h3>💬 Instant Support Chat</h3>
+        <p>Type how you feel (e.g., "I'm stressed about exams" or "I feel sad")</p>
+        <div class="chat-input-group">
+            <input type="text" id="user-msg" placeholder="Talk to me...">
+            <button onclick="aiResponse()" style="padding: 10px 20px; border-radius: 8px; border: none; background: var(--primary); color: white; cursor: pointer;">Send</button>
+        </div>
+        <p id="ai-response"></p>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        "Do you feel overwhelmed by your academic workload?",
+        "Do you find it difficult to sleep due to racing thoughts?",
+        "Have you lost interest in activities you used to enjoy?",
+        "Do you feel physically exhausted even after resting?",
+        "Is it hard for you to concentrate on your studies lately?",
+        "Do you feel more irritable or angry than usual?",
+        "Have you been avoiding friends or social gatherings?",
+        "Do you feel anxious when thinking about your future?",
+        "Do you often struggle with feelings of guilt or self-blame?",
+        "Do you feel like your daily tasks are becoming impossible?"
+    ];
+
+    const quizWrapper = document.getElementById('quiz-wrapper');
+    let scores = new Array(questions.length).fill(0);
+
+    // Build the Quiz
+    questions.forEach((q, i) => {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.innerHTML = `
+            <p><strong>${i+1}. ${q}</strong></p>
+            <div class="options">
+                <button class="opt-btn" onclick="selectScore(${i}, 2, this)">Yes</button>
+                <button class="opt-btn" onclick="selectScore(${i}, 1, this)">Sometimes</button>
+                <button class="opt-btn" onclick="selectScore(${i}, 0, this)">No</button>
+            </div>
+        `;
+        quizWrapper.appendChild(card);
+    });
+
+    function selectScore(index, value, btn) {
+        scores[index] = value;
+        const parent = btn.parentElement;
+        parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    function showResults() {
+        const total = scores.reduce((a, b) => a + b, 0);
+        const section = document.getElementById('result-section');
+        const tag = document.getElementById('score-tag');
+        const advice = document.getElementById('advice-text');
+
+        section.style.display = 'block';
+        
+        if (total <= 7) {
+            tag.innerText = "Status: Normal 👍";
+            tag.style.color = "var(--success)";
+            advice.innerText = "You seem to be managing well. Keep maintaining your healthy routine and work-life balance!";
+        } else if (total <= 14) {
+            tag.innerText = "Status: Moderate Stress ⚠️";
+            tag.style.color = "var(--warning)";
+            advice.innerText = "You are experiencing some stress. Consider practicing mindfulness, taking breaks, and talking to a trusted friend.";
+        } else {
+            tag.innerText = "Status: High Stress 🚨";
+            tag.style.color = "var(--danger)";
+            advice.innerText = "Your stress levels are high. It is important to prioritize self-care and we strongly recommend speaking with a professional counselor.";
+        }
+
+        section.scrollIntoView({behavior: 'smooth'});
+    }
+
+    // AI Keyword Logic
+    function aiResponse() {
+        const msg = document.getElementById('user-msg').value.toLowerCase();
+        const display = document.getElementById('ai-response');
+        let reply = "";
+
+        if (msg.includes("exam") || msg.includes("study") || msg.includes("grade")) {
+            reply = "🤖: Academic pressure is real, but your worth isn't defined by grades. Try the Pomodoro technique for studying!";
+        } else if (msg.includes("sad") || msg.includes("cry") || msg.includes("alone")) {
+            reply = "🤖: I'm sorry you're feeling this way. Remember, it's okay not to be okay. Have you tried talking to someone you trust?";
+        } else if (msg.includes("stress") || msg.includes("anxious") || msg.includes("worried")) {
+            reply = "🤖: Take a deep breath. Focus on one small task at a time. You can handle this!";
+        } else {
+            reply = "🤖: Thank you for sharing. Remember to be kind to yourself today.";
+        }
+
+        display.innerText = reply;
+    }
+
+    // PDF Generation
+    function generatePDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        doc.setFontSize(22);
+        doc.setTextColor(74, 144, 226);
+        doc.text("MindCheck Assessment Report", 20, 20);
+        
+        doc.setFontSize(14);
+        doc.setTextColor(0, 0, 0);
+        doc.text(`Result: ${document.getElementById('score-tag').innerText}`, 20, 40);
+        
+        doc.setFontSize(12);
+        const splitAdvice = doc.splitTextToSize(document.getElementById('advice-text').innerText, 170);
+        doc.text(splitAdvice, 20, 50);
+        
+        doc.text("Disclaimer: This is not a clinical diagnosis. Please consult a professional.", 20, 80);
+        
+        doc.save("Mental_Health_Report.pdf");
+    }
+</script>
+
+</body>
+</html>
