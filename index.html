@@ -3,24 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Wellness | UOHB</title>
+    <title>Nursing Wellness | UOHB</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 0; line-height: 1.6; }
-        .header-bar { background-color: #ffffff; padding: 15px 30px; text-align: center; border-bottom: 3px solid #00563b; display: flex; align-items: center; justify-content: space-between; }
-        .uohb-logo { max-height: 70px; width: auto; }
-        .container { max-width: 750px; margin: 30px auto; background: #ffffff; padding: 40px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        h1 { color: #00563b; font-size: 1.8rem; text-align: center; }
-        .intro-text { font-size: 1.1rem; color: #555; text-align: left; margin-bottom: 30px; border-left: 4px solid #00563b; padding-left: 15px; }
+        .header-bar { background-color: #ffffff; padding: 15px 30px; text-align: center; border-bottom: 4px solid #00563b; display: flex; align-items: center; justify-content: space-between; }
+        .uohb-logo { max-height: 75px; width: auto; }
+        .container { max-width: 800px; margin: 30px auto; background: #ffffff; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        h1 { color: #00563b; text-align: center; margin-bottom: 20px; }
+        .intro-section { background: #f9f9f9; padding: 25px; border-radius: 12px; border-left: 6px solid #00563b; margin-bottom: 30px; text-align: left; }
         .assessment-section { display: none; }
-        .question { font-weight: bold; margin-bottom: 15px; display: block; text-align: left; color: #2c3e50; font-size: 1.1rem; }
-        .option-item { display: block; background: #f8f9fa; margin-bottom: 12px; padding: 15px; border-radius: 8px; cursor: pointer; text-align: left; border: 1px solid #eee; transition: 0.3s; }
-        .option-item:hover { background: #eef2f1; border-color: #00563b; }
-        input[type="radio"] { margin-right: 10px; }
-        .main-btn { background-color: #00563b; color: white; border: none; padding: 18px; border-radius: 8px; font-size: 1.1rem; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px; }
-        #result-card { display: none; text-align: left; animation: fadeIn 0.8s; }
+        .question-block { margin-bottom: 20px; padding: 15px; border-bottom: 1px solid #eee; text-align: left; }
+        .question-text { font-weight: bold; display: block; margin-bottom: 10px; color: #2c3e50; }
+        .option-item { display: block; background: #f8f9fa; margin-bottom: 8px; padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.3s; border: 1px solid transparent; }
+        .option-item:hover { background: #fff; border-color: #00563b; }
+        .main-btn { background-color: #00563b; color: white; border: none; padding: 18px; border-radius: 10px; font-size: 1.1rem; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px; }
+        
+        /* تصميم مربع الدردشة والفضفضة */
+        #result-card { display: none; animation: fadeIn 0.8s; text-align: left; }
+        .chat-container { background: #eef2f1; padding: 20px; border-radius: 12px; margin-top: 30px; border: 1px solid #00563b; }
+        .chat-input { width: 100%; padding: 15px; border-radius: 8px; border: 1px solid #ccc; margin-top: 10px; font-size: 1rem; box-sizing: border-box; resize: vertical; }
+        .chat-response { margin-top: 15px; padding: 15px; background: #fff; border-radius: 8px; display: none; border-left: 4px solid #00563b; font-style: italic; color: #444; }
+        
         .advice-box { background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 10px; margin-top: 15px; }
-        .advice-item { margin-bottom: 15px; padding-left: 25px; position: relative; }
-        .advice-item::before { content: '→'; position: absolute; left: 0; color: #00563b; font-weight: bold; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
@@ -29,39 +33,77 @@
 <div class="header-bar">
     <img src="https://i.ibb.co/L5m9N9Z/UOHB-Logo.png" alt="UOHB Logo" class="uohb-logo">
     <h2 style="color: #00563b; margin: 0;">MindCheck</h2>
-    <div style="width: 70px;"></div>
+    <div style="width: 75px;"></div>
 </div>
 
 <div class="container">
     <div id="welcome-page">
-        <h1>Student Mental Health Assessment</h1>
-        <p class="intro-text">
-            Success in the medical and academic fields starts with a healthy mind. This assessment helps you identify your current stress level and provides deep, actionable strategies to prevent burnout.
-        </p>
-        <button class="main-btn" onclick="showQuiz()">Start Assessment</button>
+        <h1>Mental Health Assessment</h1>
+        <div class="intro-section">
+            <p>Mental health is a key factor that affects students’ performance, focus, and ability to learn. <b>Nursing students, in particular, face higher levels of stress due to academic demands and clinical training</b>, making mental health care essential for their success.</p>
+            <p>Now, let’s take a moment to assess your mental well-being. Answer the following questions honestly.</p>
+        </div>
+        <button class="main-btn" onclick="showQuiz()">Start the Assessment</button>
     </div>
 
     <div id="quiz-page" class="assessment-section">
-        <div class="question">1. How often do you feel emotionally exhausted after a day of studying?</div>
-        <div class="options">
+        <div class="question-block"><span class="question-text">1. How often do you feel emotionally drained?</span>
             <label class="option-item"><input type="radio" name="q1" value="0"> Rarely</label>
             <label class="option-item"><input type="radio" name="q1" value="1"> Sometimes</label>
-            <label class="option-item"><input type="radio" name="q1" value="2"> Almost daily</label>
-        </div>
+            <label class="option-item"><input type="radio" name="q1" value="2"> Daily</label></div>
+        <div class="question-block"><span class="question-text">2. Do you have trouble sleeping due to stress?</span>
+            <label class="option-item"><input type="radio" name="q2" value="0"> No</label>
+            <label class="option-item"><input type="radio" name="q2" value="1"> Sometimes</label>
+            <label class="option-item"><input type="radio" name="q2" value="2"> Always</label></div>
+        <div class="question-block"><span class="question-text">3. Is it hard to concentrate in clinical practice?</span>
+            <label class="option-item"><input type="radio" name="q3" value="0"> Never</label>
+            <label class="option-item"><input type="radio" name="q3" value="1"> Occasionally</label>
+            <label class="option-item"><input type="radio" name="q3" value="2"> Yes</label></div>
+        <div class="question-block"><span class="question-text">4. Do you feel physical pain (headaches) from stress?</span>
+            <label class="option-item"><input type="radio" name="q4" value="0"> Rarely</label>
+            <label class="option-item"><input type="radio" name="q4" value="1"> Often</label>
+            <label class="option-item"><input type="radio" name="q4" value="2"> Constantly</label></div>
+        <div class="question-block"><span class="question-text">5. Have you lost interest in nursing activities?</span>
+            <label class="option-item"><input type="radio" name="q5" value="0"> No</label>
+            <label class="option-item"><input type="radio" name="q5" value="1"> A little</label>
+            <label class="option-item"><input type="radio" name="q5" value="2"> Definitely</label></div>
+        <div class="question-block"><span class="question-text">6. Do you feel overwhelmed by your future career?</span>
+            <label class="option-item"><input type="radio" name="q6" value="0"> Not at all</label>
+            <label class="option-item"><input type="radio" name="q6" value="1"> Sometimes</label>
+            <label class="option-item"><input type="radio" name="q6" value="2"> Very often</label></div>
+        <div class="question-block"><span class="question-text">7. Do you have time for your social life?</span>
+            <label class="option-item"><input type="radio" name="q7" value="0"> Yes</label>
+            <label class="option-item"><input type="radio" name="q7" value="1"> Not much</label>
+            <label class="option-item"><input type="radio" name="q7" value="2"> No time</label></div>
+        <div class="question-block"><span class="question-text">8. Do you avoid talking to friends?</span>
+            <label class="option-item"><input type="radio" name="q8" value="0"> Rarely</label>
+            <label class="option-item"><input type="radio" name="q8" value="1"> Often</label>
+            <label class="option-item"><input type="radio" name="q8" value="2"> Constantly</label></div>
+        <div class="question-block"><span class="question-text">9. Are you easily irritated?</span>
+            <label class="option-item"><input type="radio" name="q9" value="0"> No</label>
+            <label class="option-item"><input type="radio" name="q9" value="1"> Sometimes</label>
+            <label class="option-item"><input type="radio" name="q9" value="2"> Always</label></div>
+        <div class="question-block"><span class="question-text">10. Do you doubt your nursing skills?</span>
+            <label class="option-item"><input type="radio" name="q10" value="0"> Never</label>
+            <label class="option-item"><input type="radio" name="q10" value="1"> Occasionally</label>
+            <label class="option-item"><input type="radio" name="q10" value="2"> Frequently</label></div>
 
-        <div class="question">2. Do you feel that your academic performance is being affected by your mood?</div>
-        <div class="options">
-            <label class="option-item"><input type="radio" name="q2" value="0"> Not at all</label>
-            <label class="option-item"><input type="radio" name="q2" value="1"> Occasionally</label>
-            <label class="option-item"><input type="radio" name="q2" value="2"> Strongly</label>
-        </div>
-        <button class="main-btn" onclick="showResult()">View Deep Solutions</button>
+        <button class="main-btn" onclick="showResult()">View Results & Chat</button>
     </div>
 
     <div id="result-card">
         <h2 id="res-title" style="text-align: center;"></h2>
         <div class="advice-box" id="res-advice"></div>
-        <button onclick="location.reload()" style="background:none; border:none; color:#00563b; cursor:pointer; text-decoration:underline; width:100%; margin-top:20px;">Retake Test</button>
+
+        <div class="chat-container">
+            <strong>💬 Mental Health Assistant:</strong>
+            <p style="font-size: 0.9rem; margin: 5px 0;">How are you feeling after seeing your result? Feel free to write anything on your mind...</p>
+            <textarea class="chat-input" id="user-thought" placeholder="Write your feelings here..."></textarea>
+            <button class="main-btn" onclick="sendReply()" style="margin-top:10px; padding:10px;">Send & Get Support</button>
+            <div id="ai-reply" class="chat-response"></div>
+        </div>
+
+        <button onclick="location.reload()" style="background:none; border:none; color:#00563b; cursor:pointer; text-decoration:underline; width:100%; margin-top:20px;">Restart Assessment</button>
     </div>
 </div>
 
@@ -69,41 +111,42 @@
     function showQuiz() {
         document.getElementById('welcome-page').style.display = 'none';
         document.getElementById('quiz-page').style.display = 'block';
+        window.scrollTo(0,0);
     }
 
     function showResult() {
-        const q1 = document.querySelector('input[name="q1"]:checked');
-        const q2 = document.querySelector('input[name="q2"]:checked');
-        if(!q1 || !q2) { alert("Please answer all questions"); return; }
-
-        let score = parseInt(q1.value) + parseInt(q2.value);
-        document.getElementById('quiz-page').style.display = 'none';
-        const resCard = document.getElementById('result-card');
-        const adviceBox = document.getElementById('res-advice');
-        resCard.style.display = 'block';
-
-        if(score <= 1) {
-            document.getElementById('res-title').innerText = "😊 Green Zone: Optimal Balance";
-            adviceBox.innerHTML = `
-                <div class="advice-item"><b>Micro-breaks:</b> Use the 50/10 rule (50 min study, 10 min total rest) to keep your brain chemicals balanced.</div>
-                <div class="advice-item"><b>Social Buffer:</b> Maintain at least one non-academic hobby per week to prevent "Identity Shrinkage".</div>
-            `;
-        } else if(score <= 3) {
-            document.getElementById('res-title').innerText = "😐 Orange Zone: Early Burnout Signs";
-            adviceBox.innerHTML = `
-                <div class="advice-item"><b>The Brain Dump:</b> Write down everything stressing you before bed. Moving thoughts to paper signals the brain it can stop "looping" them.</div>
-                <div class="advice-item"><b>Digital Boundaries:</b> Stop all academic notifications 2 hours before sleep to lower your evening Cortisol levels.</div>
-                <div class="advice-item"><b>Prioritize Tasks:</b> Use the Eisenhower Matrix to separate urgent tasks from those that can wait.</div>
-            `;
-        } else {
-            document.getElementById('res-title').innerText = "😫 Red Zone: Critical Exhaustion";
-            adviceBox.innerHTML = `
-                <div class="advice-item"><b>Immediate Deceleration:</b> Reduce your workload to the absolute minimum for 48 hours. Your cognitive function needs a "hard reset".</div>
-                <div class="advice-item"><b>Sensory Grounding:</b> When panic starts, use the 5-4-3-2-1 technique (Name 5 things you see, 4 you feel, 3 you hear, etc.) to stop the stress response.</div>
-                <div class="advice-item"><b>Professional Consult:</b> High burnout mimics clinical depression. Consider speaking with the University Counselor for a structured recovery plan.</div>
-                <div class="advice-item"><b>Sleep Hygiene:</b> Focus only on sleep for now. Without 7+ hours, your brain cannot process academic information correctly.</div>
-            `;
+        let score = 0;
+        for(let i=1; i<=10; i++) {
+            let val = document.querySelector(`input[name="q${i}"]:checked`);
+            if(!val) { alert("Please complete all questions"); return; }
+            score += parseInt(val.value);
         }
+        document.getElementById('quiz-page').style.display = 'none';
+        document.getElementById('result-card').style.display = 'block';
+
+        const title = document.getElementById('res-title');
+        const advice = document.getElementById('res-advice');
+
+        if(score <= 6) {
+            title.innerText = "😊 Balanced";
+            advice.innerHTML = "You are doing great! Your mental resilience is strong. Keep practicing self-care.";
+        } else if(score <= 13) {
+            title.innerText = "⚠️ Stressed";
+            advice.innerHTML = "You are under significant pressure. Try the <b>Brain Dump</b> technique: write your worries before sleep.";
+        } else {
+            title.innerText = "🛑 Burnout Risk";
+            advice.innerHTML = "You are at a high risk. Please take a <b>48-hour break</b>. Your health is more important than your GPA.";
+        }
+    }
+
+    function sendReply() {
+        const input = document.getElementById('user-thought').value;
+        const replyBox = document.getElementById('ai-reply');
+        if(input.trim() === "") { alert("Please write something first."); return; }
+
+        replyBox.style.display = "block";
+        replyBox.innerHTML = "<b>Assistant:</b> Thank you for sharing your feelings. As a nursing student, your emotions are valid. Remember, taking care of yourself is the first step to taking care of others. We believe in you, keep breathing and take one step at a time.";
+        document.getElementById('user-thought').value = "";
     }
 </script>
 
