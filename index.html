@@ -1,113 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nursing Wellness | UOHB</title>
+    <title>مقياس الاحتراق الأكاديمي | جامعة حفر الباطن</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 0; line-height: 1.6; }
-        .header-bar { background-color: #ffffff; padding: 15px 30px; text-align: center; border-bottom: 4px solid #00563b; display: flex; align-items: center; justify-content: space-between; }
-        .uohb-logo { max-height: 75px; width: auto; }
-        .container { max-width: 800px; margin: 30px auto; background: #ffffff; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
-        h1 { color: #00563b; text-align: center; margin-bottom: 20px; }
-        .intro-section { background: #f9f9f9; padding: 25px; border-radius: 12px; border-left: 6px solid #00563b; margin-bottom: 30px; text-align: left; }
-        .assessment-section { display: none; }
-        .question-block { margin-bottom: 20px; padding: 15px; border-bottom: 1px solid #eee; text-align: left; }
-        .question-text { font-weight: bold; display: block; margin-bottom: 10px; color: #2c3e50; }
-        .option-item { display: block; background: #f8f9fa; margin-bottom: 8px; padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.3s; border: 1px solid transparent; }
-        .option-item:hover { background: #fff; border-color: #00563b; }
-        .main-btn { background-color: #00563b; color: white; border: none; padding: 18px; border-radius: 10px; font-size: 1.1rem; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px; }
+        :root { --uohb-green: #00563b; --soft-bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--soft-bg); color: #333; margin: 0; padding: 0; line-height: 1.8; }
         
-        /* تصميم مربع الدردشة والفضفضة */
-        #result-card { display: none; animation: fadeIn 0.8s; text-align: left; }
-        .chat-container { background: #eef2f1; padding: 20px; border-radius: 12px; margin-top: 30px; border: 1px solid #00563b; }
-        .chat-input { width: 100%; padding: 15px; border-radius: 8px; border: 1px solid #ccc; margin-top: 10px; font-size: 1rem; box-sizing: border-box; resize: vertical; }
-        .chat-response { margin-top: 15px; padding: 15px; background: #fff; border-radius: 8px; display: none; border-left: 4px solid #00563b; font-style: italic; color: #444; }
+        /* ضبط الهيدر والشعار */
+        .header-bar { background-color: #ffffff; padding: 15px 40px; text-align: center; border-bottom: 5px solid var(--uohb-green); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .uohb-logo { height: 90px; width: auto; object-fit: contain; } /* حجم مثالي للشعار */
         
-        .advice-box { background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 10px; margin-top: 15px; }
+        .container { max-width: 850px; margin: 40px auto; background: #ffffff; padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        h1 { color: var(--uohb-green); text-align: center; font-size: 2rem; margin-bottom: 25px; }
+        .intro-section { background: #f9fbfb; padding: 30px; border-radius: 15px; border-right: 8px solid var(--uohb-green); margin-bottom: 35px; }
+        
+        .question-block { margin-bottom: 30px; padding: 20px; border-bottom: 1px solid #edf2f0; transition: 0.3s; }
+        .question-block:hover { background-color: #fafafa; }
+        .question-text { font-weight: bold; display: block; margin-bottom: 15px; color: #2c3e50; font-size: 1.15rem; }
+        
+        .option-item { display: block; background: #fdfdfd; margin-bottom: 12px; padding: 18px; border-radius: 10px; cursor: pointer; transition: 0.3s; border: 1px solid #eee; text-align: right; }
+        .option-item:hover { background: #f0f7f4; border-color: var(--uohb-green); }
+        input[type="radio"] { margin-left: 15px; transform: scale(1.4); cursor: pointer; }
+        
+        .main-btn { background-color: var(--uohb-green); color: white; border: none; padding: 20px; border-radius: 12px; font-size: 1.25rem; cursor: pointer; width: 100%; font-weight: bold; transition: 0.4s; margin-top: 20px; }
+        .main-btn:hover { background-color: #003d2a; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,86,59,0.3); }
+        
+        /* صندوق الـ AI */
+        .ai-chat-box { background: #eef2f1; padding: 25px; border-radius: 15px; margin-top: 30px; border: 2px solid var(--uohb-green); }
+        .ai-input { width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ccc; margin-top: 10px; font-size: 1rem; font-family: inherit; resize: none; box-sizing: border-box; }
+        .ai-response { margin-top: 15px; padding: 20px; background: #ffffff; border-radius: 10px; border-right: 5px solid var(--uohb-green); display: none; font-weight: 500; color: #2c3e50; animation: fadeIn 0.5s; }
+        
+        #result-card { display: none; animation: slideUp 0.8s ease-out; }
+        .advice-category { background: #fff; border: 2px solid #edf2f0; padding: 25px; border-radius: 15px; margin-top: 20px; border-right: 6px solid var(--uohb-green); text-align: right; }
+        .advice-category h4 { color: var(--uohb-green); margin-top: 0; font-size: 1.3rem; }
+        .final-quote { text-align: center; font-size: 1.4rem; color: var(--uohb-green); font-weight: bold; margin-top: 40px; font-style: italic; border-top: 2px solid #eee; padding-top: 20px; line-height: 1.6; }
+        
+        @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
 <div class="header-bar">
-    <img src="https://i.ibb.co/L5m9N9Z/UOHB-Logo.png" alt="UOHB Logo" class="uohb-logo">
-    <h2 style="color: #00563b; margin: 0;">MindCheck</h2>
-    <div style="width: 75px;"></div>
+    <img src="https://i.ibb.co/L5m9N9Z/UOHB-Logo.png" alt="UOHB Logo" class="uohb-logo" onerror="this.src='https://www.uhb.edu.sa/ar/PublishingImages/logo.png'">
+    <h2 style="color: var(--uohb-green); margin: 0; font-size: 1.5rem;">بوصلة الاتزان النفسي</h2>
+    <div style="width: 90px;"></div> 
 </div>
 
 <div class="container">
     <div id="welcome-page">
-        <h1>Mental Health Assessment</h1>
+        <h1>مقياس الاحتراق الأكاديمي لطلاب التمريض</h1>
         <div class="intro-section">
-            <p>Mental health is a key factor that affects students’ performance, focus, and ability to learn. <b>Nursing students, in particular, face higher levels of stress due to academic demands and clinical training</b>, making mental health care essential for their success.</p>
-            <p>Now, let’s take a moment to assess your mental well-being. Answer the following questions honestly.</p>
+            <p>مرحباً بكِ في منصتكِ الخاصة. هذا المقياس مبني على أسس علمية ليقيس مستوى الضغط الدراسي والسريري الذي تواجهينه كطالبة تمريض بـ 20 معياراً دقيقاً.</p>
+            <p><b>أجيبي بكل أريحية.. بياناتكِ خاصة تماماً، ونحن هنا لدعمكِ.</b></p>
         </div>
-        <button class="main-btn" onclick="showQuiz()">Start the Assessment</button>
+        <button class="main-btn" onclick="showQuiz()">ابدأ التقييم الشامل</button>
     </div>
 
-    <div id="quiz-page" class="assessment-section">
-        <div class="question-block"><span class="question-text">1. How often do you feel emotionally drained?</span>
-            <label class="option-item"><input type="radio" name="q1" value="0"> Rarely</label>
-            <label class="option-item"><input type="radio" name="q1" value="1"> Sometimes</label>
-            <label class="option-item"><input type="radio" name="q1" value="2"> Daily</label></div>
-        <div class="question-block"><span class="question-text">2. Do you have trouble sleeping due to stress?</span>
-            <label class="option-item"><input type="radio" name="q2" value="0"> No</label>
-            <label class="option-item"><input type="radio" name="q2" value="1"> Sometimes</label>
-            <label class="option-item"><input type="radio" name="q2" value="2"> Always</label></div>
-        <div class="question-block"><span class="question-text">3. Is it hard to concentrate in clinical practice?</span>
-            <label class="option-item"><input type="radio" name="q3" value="0"> Never</label>
-            <label class="option-item"><input type="radio" name="q3" value="1"> Occasionally</label>
-            <label class="option-item"><input type="radio" name="q3" value="2"> Yes</label></div>
-        <div class="question-block"><span class="question-text">4. Do you feel physical pain (headaches) from stress?</span>
-            <label class="option-item"><input type="radio" name="q4" value="0"> Rarely</label>
-            <label class="option-item"><input type="radio" name="q4" value="1"> Often</label>
-            <label class="option-item"><input type="radio" name="q4" value="2"> Constantly</label></div>
-        <div class="question-block"><span class="question-text">5. Have you lost interest in nursing activities?</span>
-            <label class="option-item"><input type="radio" name="q5" value="0"> No</label>
-            <label class="option-item"><input type="radio" name="q5" value="1"> A little</label>
-            <label class="option-item"><input type="radio" name="q5" value="2"> Definitely</label></div>
-        <div class="question-block"><span class="question-text">6. Do you feel overwhelmed by your future career?</span>
-            <label class="option-item"><input type="radio" name="q6" value="0"> Not at all</label>
-            <label class="option-item"><input type="radio" name="q6" value="1"> Sometimes</label>
-            <label class="option-item"><input type="radio" name="q6" value="2"> Very often</label></div>
-        <div class="question-block"><span class="question-text">7. Do you have time for your social life?</span>
-            <label class="option-item"><input type="radio" name="q7" value="0"> Yes</label>
-            <label class="option-item"><input type="radio" name="q7" value="1"> Not much</label>
-            <label class="option-item"><input type="radio" name="q7" value="2"> No time</label></div>
-        <div class="question-block"><span class="question-text">8. Do you avoid talking to friends?</span>
-            <label class="option-item"><input type="radio" name="q8" value="0"> Rarely</label>
-            <label class="option-item"><input type="radio" name="q8" value="1"> Often</label>
-            <label class="option-item"><input type="radio" name="q8" value="2"> Constantly</label></div>
-        <div class="question-block"><span class="question-text">9. Are you easily irritated?</span>
-            <label class="option-item"><input type="radio" name="q9" value="0"> No</label>
-            <label class="option-item"><input type="radio" name="q9" value="1"> Sometimes</label>
-            <label class="option-item"><input type="radio" name="q9" value="2"> Always</label></div>
-        <div class="question-block"><span class="question-text">10. Do you doubt your nursing skills?</span>
-            <label class="option-item"><input type="radio" name="q10" value="0"> Never</label>
-            <label class="option-item"><input type="radio" name="q10" value="1"> Occasionally</label>
-            <label class="option-item"><input type="radio" name="q10" value="2"> Frequently</label></div>
-
-        <button class="main-btn" onclick="showResult()">View Results & Chat</button>
+    <div id="quiz-page" style="display:none;">
+        <div id="questions-container"></div>
+        <button class="main-btn" onclick="showResult()">تحليل الحالة والحلول</button>
     </div>
 
     <div id="result-card">
-        <h2 id="res-title" style="text-align: center;"></h2>
-        <div class="advice-box" id="res-advice"></div>
-
-        <div class="chat-container">
-            <strong>💬 Mental Health Assistant:</strong>
-            <p style="font-size: 0.9rem; margin: 5px 0;">How are you feeling after seeing your result? Feel free to write anything on your mind...</p>
-            <textarea class="chat-input" id="user-thought" placeholder="Write your feelings here..."></textarea>
-            <button class="main-btn" onclick="sendReply()" style="margin-top:10px; padding:10px;">Send & Get Support</button>
-            <div id="ai-reply" class="chat-response"></div>
+        <h2 id="res-title" style="text-align: center; color: var(--uohb-green);"></h2>
+        <div id="res-advice"></div>
+        
+        <div class="ai-chat-box">
+            <strong>🤖 مساعدك النفسي الرقمي:</strong>
+            <p style="font-size: 0.95rem; margin: 8px 0;">لا تخرجي وبخاطرك شيء.. فضفضي هنا وسأرد عليكِ فوراً:</p>
+            <textarea class="ai-input" id="user-thought" rows="3" placeholder="اكتبي مشاعرك أو مخاوفك هنا..."></textarea>
+            <button class="main-btn" onclick="askAI()" style="margin-top:10px; padding:12px; font-size: 1rem;">إرسال وفضفضة</button>
+            <div id="ai-reply" class="ai-response"></div>
         </div>
 
-        <button onclick="location.reload()" style="background:none; border:none; color:#00563b; cursor:pointer; text-decoration:underline; width:100%; margin-top:20px;">Restart Assessment</button>
+        <div class="final-quote" id="final-quote"></div>
+        <button class="main-btn" onclick="location.reload()" style="background:#777; margin-top:30px;">إعادة الاختبار</button>
     </div>
 </div>
 
 <script>
+    const questions = [
+        "هل تشعرين بالإرهاق الجسدي بمجرد الاستيقاظ من النوم؟",
+        "هل تجدين صعوبة في التعاطف مع المرضى أثناء التدريب السريري؟",
+        "هل تشعرين أن المذاكرة فقدت قيمتها ومعناها بالنسبة لكِ؟",
+        "هل تعانين من صداع متكرر في أيام المحاضرات الطويلة؟",
+        "هل تجدين صعوبة بالغة في التركيز وقراءة الصفحات العلمية؟",
+        "هل تشعرين بالرغبة في البكاء عند التفكير في حجم التكاليف؟",
+        "هل قل تواصلك مع أهلك وأصدقائك بسبب انشغالك بالدراسة؟",
+        "هل تعانين من آلام مجهولة في الظهر أو الرقبة مؤخراً؟",
+        "هل تشعرين أنكِ أقل كفاءة أو مهارة من زميلاتك؟",
+        "هل تؤجلين مهامك السريرية (Clinical) حتى اللحظة الأخيرة؟",
+        "هل تعانين من اضطرابات في الشهية (زيادة مفرطة أو فقدان)؟",
+        "هل تنفعلين بسرعة من ملاحظات المشرفين أو الدكاترة؟",
+        "هل تراودك كوابيس أو أحلام مزعجة تتعلق بالدراسة؟",
+        "هل يثير مستقبلك المهني في التمريض الخوف بدلاً من الطموح؟",
+        "هل تفتقدين الشعور بالإنجاز حتى بعد الحصول على درجات جيدة؟",
+        "هل تجدين صعوبة في اتخاذ أبسط القرارات اليومية؟",
+        "هل تهربين من الواقع بالرغبة في النوم لساعات طويلة جداً؟",
+        "هل زاد استهلاكك للكافيين أو مشروبات الطاقة بشكل مفرط؟",
+        "هل تشعرين بأنكِ تعملين كـ 'آلة' دون مشاعر أو روح؟",
+        "هل تفكرين بجدية في الانسحاب من التخصص رغم تعبك فيه؟"
+    ];
+
+    const container = document.getElementById('questions-container');
+    questions.forEach((q, i) => {
+        container.innerHTML += `
+            <div class="question-block">
+                <span class="question-text">${i+1}. ${q}</span>
+                <label class="option-item"><input type="radio" name="q${i+1}" value="0"> نادراً</label>
+                <label class="option-item"><input type="radio" name="q${i+1}" value="1"> أحياناً</label>
+                <label class="option-item"><input type="radio" name="q${i+1}" value="2"> دائماً</label>
+            </div>
+        `;
+    });
+
     function showQuiz() {
         document.getElementById('welcome-page').style.display = 'none';
         document.getElementById('quiz-page').style.display = 'block';
@@ -116,39 +125,39 @@
 
     function showResult() {
         let score = 0;
-        for(let i=1; i<=10; i++) {
+        for(let i=1; i<=20; i++) {
             let val = document.querySelector(`input[name="q${i}"]:checked`);
-            if(!val) { alert("Please complete all questions"); return; }
+            if(!val) { alert("يرجى الإجابة على السؤال رقم " + i); return; }
             score += parseInt(val.value);
         }
         document.getElementById('quiz-page').style.display = 'none';
         document.getElementById('result-card').style.display = 'block';
-
-        const title = document.getElementById('res-title');
         const advice = document.getElementById('res-advice');
+        const quote = document.getElementById('final-quote');
 
-        if(score <= 6) {
-            title.innerText = "😊 Balanced";
-            advice.innerHTML = "You are doing great! Your mental resilience is strong. Keep practicing self-care.";
-        } else if(score <= 13) {
-            title.innerText = "⚠️ Stressed";
-            advice.innerHTML = "You are under significant pressure. Try the <b>Brain Dump</b> technique: write your worries before sleep.";
+        if(score <= 12) {
+            document.getElementById('res-title').innerText = "✅ حالة اتزان ممتازة";
+            advice.innerHTML = `<div class="advice-category"><h4>نصيحة الاستدامة:</h4>أنتِ تبلين بلاءً حسناً. حافظي على توازنك الكيميائي عبر ممارسة رياضة خفيفة، واحرصي على تخصيص 'وقت مقدس' لهوايتك الخاصة بعيداً عن التمريض.</div>`;
+            quote.innerText = "«المرونة ليست في عدم الانكسار، بل في القدرة على النهوض من جديد.»";
+        } else if(score <= 25) {
+            document.getElementById('res-title').innerText = "⚠️ إرهاق مجهد (بداية احتراق)";
+            advice.innerHTML = `<div class="advice-category"><h4>خطة التدخل:</h4>عقلك يحتاج للتنفس. جربي تقنية <b>Brain Dump</b> وكتابة مخاوفك قبل النوم، واستخدمي قاعدة الـ 50 دقيقة دراسة و10 دقائق راحة 'بدون جوال' لتقليل التشتت الرقمي.</div>`;
+            quote.innerText = "«الراحة ليست خمولاً، بل هي استجماع للقوى لإكمال الرحلة بوعي.»";
         } else {
-            title.innerText = "🛑 Burnout Risk";
-            advice.innerHTML = "You are at a high risk. Please take a <b>48-hour break</b>. Your health is more important than your GPA.";
+            document.getElementById('res-title').innerText = "🛑 تنبيه: احتراق نفسي حاد";
+            advice.innerHTML = `<div class="advice-category"><h4>بروتوكول الطوارئ:</h4>صحتك النفسية هي أساس شهادتك. أنتِ بحاجة لعزلة استشفائية لمدة 48 ساعة. توقفي عن متابعة المجموعات الدراسية، ومارسي تمرين الحواس 5-4-3-2-1 لتهدئة جهازك العصبي.</div>`;
+            quote.innerText = "«تذكري دائماً.. أنكِ لن تستطيعي مداواة جراح الآخرين، إذا كنتِ تنزفين من الداخل.»";
         }
     }
 
-    function sendReply() {
-        const input = document.getElementById('user-thought').value;
-        const replyBox = document.getElementById('ai-reply');
-        if(input.trim() === "") { alert("Please write something first."); return; }
-
-        replyBox.style.display = "block";
-        replyBox.innerHTML = "<b>Assistant:</b> Thank you for sharing your feelings. As a nursing student, your emotions are valid. Remember, taking care of yourself is the first step to taking care of others. We believe in you, keep breathing and take one step at a time.";
+    function askAI() {
+        const text = document.getElementById('user-thought').value;
+        const reply = document.getElementById('ai-reply');
+        if(!text.trim()) return;
+        reply.style.display = "block";
+        reply.innerHTML = "<b>رد المساعد:</b> أسمعكِ بقلبي يا أمل.. ما تشعرين به الآن هو تعبير عن مدى إخلاصكِ وتعبكِ في هذا التخصص العظيم. كطالبة تمريض في جامعة حفر الباطن، أنتِ تحملين أمانة كبيرة، لكن تذكري أن لنفسكِ عليكِ حقاً. خذي نفساً عميقاً، نحن فخورون بكِ وبكل خطوة تخطينها.";
         document.getElementById('user-thought').value = "";
     }
 </script>
-
 </body>
 </html>
