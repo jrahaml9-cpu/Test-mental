@@ -8,9 +8,8 @@
         :root { --uohb-green: #00563b; --soft-bg: #f4f7f6; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--soft-bg); color: #333; margin: 0; padding: 0; line-height: 1.8; }
         
-        /* ضبط الهيدر والشعار */
         .header-bar { background-color: #ffffff; padding: 15px 40px; text-align: center; border-bottom: 5px solid var(--uohb-green); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .uohb-logo { height: 90px; width: auto; object-fit: contain; } /* حجم مثالي للشعار */
+        .uohb-logo { height: 90px; width: auto; object-fit: contain; }
         
         .container { max-width: 850px; margin: 40px auto; background: #ffffff; padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
         h1 { color: var(--uohb-green); text-align: center; font-size: 2rem; margin-bottom: 25px; }
@@ -27,7 +26,6 @@
         .main-btn { background-color: var(--uohb-green); color: white; border: none; padding: 20px; border-radius: 12px; font-size: 1.25rem; cursor: pointer; width: 100%; font-weight: bold; transition: 0.4s; margin-top: 20px; }
         .main-btn:hover { background-color: #003d2a; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,86,59,0.3); }
         
-        /* صندوق الـ AI */
         .ai-chat-box { background: #eef2f1; padding: 25px; border-radius: 15px; margin-top: 30px; border: 2px solid var(--uohb-green); }
         .ai-input { width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ccc; margin-top: 10px; font-size: 1rem; font-family: inherit; resize: none; box-sizing: border-box; }
         .ai-response { margin-top: 15px; padding: 20px; background: #ffffff; border-radius: 10px; border-right: 5px solid var(--uohb-green); display: none; font-weight: 500; color: #2c3e50; animation: fadeIn 0.5s; }
@@ -44,7 +42,8 @@
 <body>
 
 <div class="header-bar">
-    <img src="https://i.ibb.co/L5m9N9Z/UOHB-Logo.png" alt="UOHB Logo" class="uohb-logo" onerror="this.src='https://www.uhb.edu.sa/ar/PublishingImages/logo.png'">
+    <img src="https://upload.wikimedia.org/wikipedia/ar/5/52/%D8%B4%D8%B9%D8%A7%D1%82%D8%B1_%D8%AC%D8%A7%D9%85%D8%B1%D8%A9_%D8%AD%D9%81%D8%B1_%D8%A7%D9%84%D8%A8%D8%A7%D8%B7%D9%86.png" 
+         alt="UOHB Logo" class="uohb-logo" onerror="this.src='https://i.ibb.co/L5m9N9Z/UOHB-Logo.png'">
     <h2 style="color: var(--uohb-green); margin: 0; font-size: 1.5rem;">بوصلة الاتزان النفسي</h2>
     <div style="width: 90px;"></div> 
 </div>
@@ -53,8 +52,8 @@
     <div id="welcome-page">
         <h1>مقياس الاحتراق الأكاديمي لطلاب التمريض</h1>
         <div class="intro-section">
-            <p>مرحباً بكِ في منصتكِ الخاصة. هذا المقياس مبني على أسس علمية ليقيس مستوى الضغط الدراسي والسريري الذي تواجهينه كطالبة تمريض بـ 20 معياراً دقيقاً.</p>
-            <p><b>أجيبي بكل أريحية.. بياناتكِ خاصة تماماً، ونحن هنا لدعمكِ.</b></p>
+            <p>مرحباً بك في منصتك الخاصة. هذا المقياس مبني على أسس علمية ليقيس مستوى الضغط الدراسي والسريري بـ 20 معياراً دقيقاً.</p>
+            <p><b>أجب بكل أريحية.. بياناتك خاصة تماماً، ونحن هنا لدعمك.</b></p>
         </div>
         <button class="main-btn" onclick="showQuiz()">ابدأ التقييم الشامل</button>
     </div>
@@ -70,8 +69,8 @@
         
         <div class="ai-chat-box">
             <strong>🤖 مساعدك النفسي الرقمي:</strong>
-            <p style="font-size: 0.95rem; margin: 8px 0;">لا تخرجي وبخاطرك شيء.. فضفضي هنا وسأرد عليكِ فوراً:</p>
-            <textarea class="ai-input" id="user-thought" rows="3" placeholder="اكتبي مشاعرك أو مخاوفك هنا..."></textarea>
+            <p style="font-size: 0.95rem; margin: 8px 0;">لا تخرج وبخاطرك شيء.. فضفض هنا وسأرد عليك فوراً:</p>
+            <textarea class="ai-input" id="user-thought" rows="3" placeholder="اكتب مشاعرك أو مخاوفك هنا..."></textarea>
             <button class="main-btn" onclick="askAI()" style="margin-top:10px; padding:12px; font-size: 1rem;">إرسال وفضفضة</button>
             <div id="ai-reply" class="ai-response"></div>
         </div>
@@ -83,26 +82,26 @@
 
 <script>
     const questions = [
-        "هل تشعرين بالإرهاق الجسدي بمجرد الاستيقاظ من النوم؟",
-        "هل تجدين صعوبة في التعاطف مع المرضى أثناء التدريب السريري؟",
-        "هل تشعرين أن المذاكرة فقدت قيمتها ومعناها بالنسبة لكِ؟",
-        "هل تعانين من صداع متكرر في أيام المحاضرات الطويلة؟",
-        "هل تجدين صعوبة بالغة في التركيز وقراءة الصفحات العلمية؟",
-        "هل تشعرين بالرغبة في البكاء عند التفكير في حجم التكاليف؟",
+        "هل تشعر بالإرهاق الجسدي بمجرد الاستيقاظ من النوم؟",
+        "هل تجد صعوبة في التعاطف مع المرضى أثناء التدريب السريري؟",
+        "هل تشعر أن المذاكرة فقدت قيمتها ومعناها بالنسبة لك؟",
+        "هل تعاني من صداع متكرر في أيام المحاضرات الطويلة؟",
+        "هل تجد صعوبة بالغة في التركيز وقراءة الصفحات العلمية؟",
+        "هل تشعر بالرغبة في البكاء عند التفكير في حجم التكاليف؟",
         "هل قل تواصلك مع أهلك وأصدقائك بسبب انشغالك بالدراسة؟",
-        "هل تعانين من آلام مجهولة في الظهر أو الرقبة مؤخراً؟",
-        "هل تشعرين أنكِ أقل كفاءة أو مهارة من زميلاتك؟",
-        "هل تؤجلين مهامك السريرية (Clinical) حتى اللحظة الأخيرة؟",
-        "هل تعانين من اضطرابات في الشهية (زيادة مفرطة أو فقدان)؟",
-        "هل تنفعلين بسرعة من ملاحظات المشرفين أو الدكاترة؟",
+        "هل تعاني من آلام مجهولة في الظهر أو الرقبة مؤخراً؟",
+        "هل تشعر أنك أقل كفاءة أو مهارة من زملائك؟",
+        "هل تؤجل مهامك السريرية (Clinical) حتى اللحظة الأخيرة؟",
+        "هل تعاني من اضطرابات في الشهية (زيادة مفرطة أو فقدان)؟",
+        "هل تنفعل بسرعة من ملاحظات المشرفين أو الدكاترة؟",
         "هل تراودك كوابيس أو أحلام مزعجة تتعلق بالدراسة؟",
         "هل يثير مستقبلك المهني في التمريض الخوف بدلاً من الطموح؟",
-        "هل تفتقدين الشعور بالإنجاز حتى بعد الحصول على درجات جيدة؟",
-        "هل تجدين صعوبة في اتخاذ أبسط القرارات اليومية؟",
-        "هل تهربين من الواقع بالرغبة في النوم لساعات طويلة جداً؟",
+        "هل تفتقد الشعور بالإنجاز حتى بعد الحصول على درجات جيدة؟",
+        "هل تجد صعوبة في اتخاذ أبسط القرارات اليومية؟",
+        "هل تهرب من الواقع بالرغبة في النوم لساعات طويلة جداً؟",
         "هل زاد استهلاكك للكافيين أو مشروبات الطاقة بشكل مفرط؟",
-        "هل تشعرين بأنكِ تعملين كـ 'آلة' دون مشاعر أو روح؟",
-        "هل تفكرين بجدية في الانسحاب من التخصص رغم تعبك فيه؟"
+        "هل تشعر بأنك تعمل كـ 'آلة' دون مشاعر أو روح؟",
+        "هل تفكر بجدية في الانسحاب من التخصص رغم تعبك فيه؟"
     ];
 
     const container = document.getElementById('questions-container');
@@ -137,16 +136,16 @@
 
         if(score <= 12) {
             document.getElementById('res-title').innerText = "✅ حالة اتزان ممتازة";
-            advice.innerHTML = `<div class="advice-category"><h4>نصيحة الاستدامة:</h4>أنتِ تبلين بلاءً حسناً. حافظي على توازنك الكيميائي عبر ممارسة رياضة خفيفة، واحرصي على تخصيص 'وقت مقدس' لهوايتك الخاصة بعيداً عن التمريض.</div>`;
+            advice.innerHTML = `<div class="advice-category"><h4>نصيحة الاستدامة:</h4>أنت تبلي بلاءً حسناً. حافظ على توازنك الكيميائي عبر ممارسة رياضة خفيفة، واحرص على تخصيص وقت لهوايتك الخاصة.</div>`;
             quote.innerText = "«المرونة ليست في عدم الانكسار، بل في القدرة على النهوض من جديد.»";
         } else if(score <= 25) {
             document.getElementById('res-title').innerText = "⚠️ إرهاق مجهد (بداية احتراق)";
-            advice.innerHTML = `<div class="advice-category"><h4>خطة التدخل:</h4>عقلك يحتاج للتنفس. جربي تقنية <b>Brain Dump</b> وكتابة مخاوفك قبل النوم، واستخدمي قاعدة الـ 50 دقيقة دراسة و10 دقائق راحة 'بدون جوال' لتقليل التشتت الرقمي.</div>`;
+            advice.innerHTML = `<div class="advice-category"><h4>خطة التدخل:</h4>عقلك يحتاج للتنفس. جرب تقنية Brain Dump وكتابة مخاوفك قبل النوم، واستخدم قاعدة الـ 50 دقيقة دراسة و10 دقائق راحة.</div>`;
             quote.innerText = "«الراحة ليست خمولاً، بل هي استجماع للقوى لإكمال الرحلة بوعي.»";
         } else {
             document.getElementById('res-title').innerText = "🛑 تنبيه: احتراق نفسي حاد";
-            advice.innerHTML = `<div class="advice-category"><h4>بروتوكول الطوارئ:</h4>صحتك النفسية هي أساس شهادتك. أنتِ بحاجة لعزلة استشفائية لمدة 48 ساعة. توقفي عن متابعة المجموعات الدراسية، ومارسي تمرين الحواس 5-4-3-2-1 لتهدئة جهازك العصبي.</div>`;
-            quote.innerText = "«تذكري دائماً.. أنكِ لن تستطيعي مداواة جراح الآخرين، إذا كنتِ تنزفين من الداخل.»";
+            advice.innerHTML = `<div class="advice-category"><h4>بروتوكول الطوارئ:</h4>صحتك النفسية هي أساس شهادتك. أنت بحاجة لعزلة استشفائية لمدة 48 ساعة. توقف عن متابعة المجموعات الدراسية، ومارس تمرين الحواس 5-4-3-2-1.</div>`;
+            quote.innerText = "«تذكر دائماً.. أنك لن تستطيع مداواة جراح الآخرين، إذا كنت تنزف من الداخل.»";
         }
     }
 
@@ -154,8 +153,18 @@
         const text = document.getElementById('user-thought').value;
         const reply = document.getElementById('ai-reply');
         if(!text.trim()) return;
+
+        const replies = [
+            "أسمعك جيداً.. ما تشعر به الآن هو رد فعل طبيعي لضغوطات عظيمة. خذ نفساً عميقاً، فصحتك هي الأهم.",
+            "شكراً لمشاركتك هذه المشاعر. كطالب تمريض، أنت تقوم بعمل استثنائي، ولا بأس بأن تشعر بالتعب أحياناً. نحن معك.",
+            "تذكر أن هذه الضغوط مؤقتة ولن تدوم. أنت تمتلك القوة لتجاوزها، ووجودك في هذا التخصص هو فخر لنا.",
+            "كلماتك تدل على وعي كبير بمشاعرك. الفضفضة هي أول خطوة للراحة، استمر في العناية بنفسك كما تهتم بالآخرين.",
+            "لا تحمل همّاً كبيراً، فكل مجهود تبذله اليوم هو لبنة في مستقبلك العظيم. خذ استراحة بسيطة فجسدك وعقلك يستحقان ذلك."
+        ];
+
+        const randomReply = replies[Math.floor(Math.random() * replies.length)];
         reply.style.display = "block";
-        reply.innerHTML = "<b>رد المساعد:</b> أسمعكِ بقلبي يا أمل.. ما تشعرين به الآن هو تعبير عن مدى إخلاصكِ وتعبكِ في هذا التخصص العظيم. كطالبة تمريض في جامعة حفر الباطن، أنتِ تحملين أمانة كبيرة، لكن تذكري أن لنفسكِ عليكِ حقاً. خذي نفساً عميقاً، نحن فخورون بكِ وبكل خطوة تخطينها.";
+        reply.innerHTML = "<b>🤖 المساعد الرقمي:</b> " + randomReply;
         document.getElementById('user-thought').value = "";
     }
 </script>
